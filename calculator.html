@@ -44,7 +44,44 @@
             padding: 10px;
             margin-top: 5px;
             background: #333;
-            border: 1px solid;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #00ff88;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+
+        }
+
+        button:hover{
+            background: #00cc6a
+        }
+
+        #result-screen{
+            margin-top: 20px;
+            padding: 15px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 5px;
+            text-align: center;
+            display: none;/*hidden by default*/
+        }
+
+        .ptice-tag {
+            font-size: 1.5em;
+            color: #00ff88;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -54,8 +91,64 @@
 
         <label>Package  Weight (kg)</label>
         <select id="city-select">
-            <option value="lagos">Lagos(</option>
+            <option value="lagos">Lagos(₦1000/kg)</option>
+            <option value="abuja">Abuja(₦1500/kg)</option>
+            <option value="ph">Port Hacourt(₦800/kg)</option>
+            <option value="kano">Kano(₦2000/kg)</option>
         </select>
-    </div>
-</body>
+
+        <button id="calc-btn">Calculate price</button>
+            <div id="result-screen">
+                <span style="color: #888"; font-size: 0.8em;>Estimated Cost:</span><br>
+                <div id="final-price" class="price-tag">₦0.00</div>       
+            </div>
+    </div>    
+    <script>
+        //--- THE JAVASCRIPT ENGINE---
+
+        //1. SELECT THE PARTS
+        const weightInput = document.getElementById('weight-input');
+        const citySelect = document.getElementById('city-select');
+        const calcBtn = document.getElemntById('calc-btn');
+        const resultScreen = document.getElemntById('result-screen');
+        const finalPriceDisplay = document.getElementById('final-price');
+
+        ///2. THE LOGIC
+        calcBtn.addEventListener('click',function() {
+
+            //Get data
+            let weight = parseFloat(weightInput.value);
+            let city = citySelect.value;
+            let rate = 0;
+            // Validation
+            if(isNaN(weight) || weight <= 0) {
+                alert("Error: Please enter a valid weight!");
+                return;
+            }
+
+            //The Rate Logic (wiith kano added)
+            if (city === "lagos") {
+                rate = 1000;
+             } else if (city === "abuja") {
+                rate = 1500;
+             } else if (city === "ph") {
+                rate = 800;
+             } else if (city === "kano") {
+                rate = 2000;
+             }
+
+             //Calculation
+             let totalPrice = weight * rate;
+
+             //Output
+             finalPriceDisplay.innerText = '₦' + totalPrice.toLocalString();
+             resultScreen.style.display = 'block';
+        });
+    </script>
+
+
+</body>    
 </html>
+            
+       
+
