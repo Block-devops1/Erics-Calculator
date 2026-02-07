@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <title>Erics Logistics | Rate Engine</title>
+    <meta charset="UTF-8">
+    <title>Erics Logistics | Rate Engine</title>
     
     <style>
-        /* the skin (css) - Dark Mode for Battery Saving */
+        /* The Skin (CSS) */
         body {
             background-color: #121212; 
             color: #ffffff;
@@ -21,7 +21,7 @@
             background: #1e1e1e;
             padding: 30px;
             border-radius: 12px;
-            border: 1px solid#333;
+            border: 1px solid #333;
             width: 300px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
@@ -39,7 +39,7 @@
             color: #aaa;
         }
 
-        input,select {
+        input, select {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -61,24 +61,23 @@
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
-
         }
 
-        button:hover{
-            background: #00cc6a
+        button:hover {
+            background: #00cc6a;
         }
 
-        #result-screen{
+        #result-screen {
             margin-top: 20px;
             padding: 15px;
             background: #000;
             border: 1px solid #333;
             border-radius: 5px;
             text-align: center;
-            display: none;/*hidden by default*/
+            display: none; /* hidden by default */
         }
 
-        .ptice-tag {
+        .price-tag {
             font-size: 1.5em;
             color: #00ff88;
             font-weight: bold;
@@ -89,66 +88,69 @@
     <div class="device">
         <h2>Erics Logistics</h2>
 
-        <label>Package  Weight (kg)</label>
+        <label>Package Weight (kg)</label>
+        <input type="number" id="weight-input" placeholder="E.g. 5">  
+        
+        <label>Destination</label> 
         <select id="city-select">
-            <option value="lagos">Lagos(₦1000/kg)</option>
-            <option value="abuja">Abuja(₦1500/kg)</option>
-            <option value="ph">Port Hacourt(₦800/kg)</option>
-            <option value="kano">Kano(₦2000/kg)</option>
+            <option value="lagos">Lagos (₦1000/kg)</option>
+            <option value="abuja">Abuja (₦1500/kg)</option>
+            <option value="ph">Port Harcourt (₦800/kg)</option>
+            <option value="kano">Kano (₦2000/kg)</option>
         </select>
 
-        <button id="calc-btn">Calculate price</button>
-            <div id="result-screen">
-                <span style="color: #888"; font-size: 0.8em;>Estimated Cost:</span><br>
-                <div id="final-price" class="price-tag">₦0.00</div>       
-            </div>
+        <button id="calc-btn">Calculate Price</button>
+            
+        <div id="result-screen">
+            <span style="color: #888; font-size: 0.8em;">Estimated Cost:</span><br>
+            <div id="final-price" class="price-tag">₦0.00</div>       
+        </div>
     </div>    
-    <script>
-        //--- THE JAVASCRIPT ENGINE---
 
-        //1. SELECT THE PARTS
+    <script>
+        // --- THE JAVASCRIPT ENGINE ---
+
+        // 1. SELECT THE PARTS
         const weightInput = document.getElementById('weight-input');
         const citySelect = document.getElementById('city-select');
-        const calcBtn = document.getElemntById('calc-btn');
-        const resultScreen = document.getElemntById('result-screen');
+        const calcBtn = document.getElementById('calc-btn');
+        // FIXED: Added the missing 'e' below (getElementById)
+        const resultScreen = document.getElementById('result-screen');
         const finalPriceDisplay = document.getElementById('final-price');
 
-        ///2. THE LOGIC
-        calcBtn.addEventListener('click',function() {
+        // 2. THE LOGIC
+        calcBtn.addEventListener('click', function() {
 
-            //Get data
+            // Get data
             let weight = parseFloat(weightInput.value);
             let city = citySelect.value;
+            // alert("You selected: " + city); // Debugging line removed for cleaner look
             let rate = 0;
+
             // Validation
             if(isNaN(weight) || weight <= 0) {
                 alert("Error: Please enter a valid weight!");
                 return;
             }
 
-            //The Rate Logic (wiith kano added)
+            // The Rate Logic
             if (city === "lagos") {
                 rate = 1000;
-             } else if (city === "abuja") {
+            } else if (city === "abuja") {
                 rate = 1500;
-             } else if (city === "ph") {
+            } else if (city === "ph") {
                 rate = 800;
-             } else if (city === "kano") {
+            } else if (city === "kano") {
                 rate = 2000;
-             }
+            }
 
-             //Calculation
-             let totalPrice = weight * rate;
+            // Calculation
+            let totalPrice = weight * rate;
 
-             //Output
-             finalPriceDisplay.innerText = '₦' + totalPrice.toLocalString();
-             resultScreen.style.display = 'block';
+            // Output
+            finalPriceDisplay.innerText = '₦' + totalPrice.toLocaleString();
+            resultScreen.style.display = 'block';
         });
     </script>
-
-
 </body>    
 </html>
-            
-       
-
